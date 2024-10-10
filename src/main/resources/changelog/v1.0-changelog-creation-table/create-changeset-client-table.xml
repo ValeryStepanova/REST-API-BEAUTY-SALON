@@ -1,0 +1,23 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="create_table_client" author="lera">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="client"/>
+            </not>
+        </preConditions>
+        <createTable tableName="client">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(200)"/>
+            <column name="gmail" type="varchar(200)"/>
+            <column name="user_id" type="int"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="client"
+                baseColumnNames="user_id"
+                constraintName="fk_user_id"
+                referencedColumnNames="id"
+                referencedTableName="user"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="create_table_procedure_material" author="lera">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tb_procedure_material"/>
+            </not>
+        </preConditions>
+        <createTable tableName="tb_procedure_material">
+            <column name="procedure_id" type="int"/>
+            <column name="material_id" type="int"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="tb_procedure_material"
+                baseColumnNames="procedure_id"
+                constraintName="fk_procedure_material_id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                referencedTableName="tb_procedure"
+                referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                baseTableName="tb_procedure_material"
+                baseColumnNames="material_id"
+                constraintName="fk_material_id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                referencedTableName="material"
+                referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

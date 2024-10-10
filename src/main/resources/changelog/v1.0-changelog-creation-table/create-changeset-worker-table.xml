@@ -1,0 +1,43 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="create_table_worker" author="lera">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="worker"/>
+            </not>
+        </preConditions>
+        <createTable tableName="worker">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(200)"/>
+            <column name="price" type="double"/>
+            <column name="speciality_id" type="int"/>
+            <column name="address_id" type="int"/>
+            <column name="procedure_id" type="int"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="worker"
+                                 baseColumnNames="speciality_id"
+                                 constraintName="fk_speciality_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"
+                                 referencedTableName="speciality"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="worker"
+                                 baseColumnNames="address_id"
+                                 constraintName="fk_address_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"
+                                 referencedTableName="address"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                baseTableName="worker"
+                baseColumnNames="procedure_id"
+                onUpdate="CASCADE"
+                onDelete="CASCADE"
+                constraintName="fk_procedure_id"
+                referencedTableName="tb_procedure"
+                referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
